@@ -409,6 +409,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/main.js"></script>
 			<script>
 			function showHarvestedData() {
+			  // Browser-exposed info (safe + real)
 			  document.getElementById("device").textContent =
 			    /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
 			
@@ -426,114 +427,84 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			
 			  document.getElementById("ip").textContent =
 			    "192.0.2." + Math.floor(Math.random() * 255) + " (simulated)";
+			}
+
+			/* 🔐 Real browser dialogs phishing sites abuse */
+			function phishingDialogFlow() {
 			
+			  // 1️⃣ Real alert (cannot be styled or faked)
+			  alert("⚠️ Security Alert\n\nUnusual sign‑in attempt detected.");
+			
+			  // 2️⃣ Real confirm dialog
+			  const proceed = confirm(
+			    "To protect your account, a security update is required.\n\nInstall now?"
+			  );
+			
+			  if (!proceed) {
+			    alert("Account protection postponed.\nSome features may be limited.");
+			  }
+		  
+			  // 3️⃣ Real permission prompt (optional but powerful)
+			  if ("Notification" in window) {
+			    Notification.requestPermission();
+			  }
+		  
+			  // 4️⃣ Show what was harvested
+			  showHarvestedData();
+		  
+			  // 5️⃣ Move to results article (Dimension-style)
 			  location.hash = "#harvestedData";
 			}
-			
-			document.getElementById("loginForm").addEventListener("submit", function(e) {
+
+			/* Hook into the form */
+			document.getElementById("loginForm").addEventListener("submit", function (e) {
 			  e.preventDefault();
-			  showHarvestedData();
+			  phishingDialogFlow();
 			});
-			</script>
 
-
-
-
-			<script>
-			function fakeSecurityAlert() {
-			  alert("⚠️ Security Warning:\nUnusual activity detected on your account.");
-			}
-
-			function fakeConfirmDownload() {
-			  const proceed = confirm(
-			    "This update is required to keep your account secure.\n\nDo you want to download now?"
-			  );
-			
-			  if (proceed) {
-			    alert("Download starting...\n(Source: Unknown publisher)");
-			  } else {
-			    alert("Update postponed.\nYour account may be limited.");
-			  }
-			}
-			</script>
-			<button onclick="fakeConfirmDownload()" class="primary">
-			  Download Security Update
-			</button>
-			<script>
+			/* 6️⃣ Trap-style navigation pressure (very realistic) */
 			window.addEventListener("beforeunload", function (e) {
 			  e.preventDefault();
-			  e.returnValue = "Leaving now may result in account suspension.";
+			  e.returnValue = "";
 			});
 			</script>
 
 
-
-
-
-			<button onclick="requestNotifications()">
-			  Enable Security Alerts
-			</button>
-
-			<script>
-			function requestNotifications() {
-			  if ("Notification" in window) {
-			    Notification.requestPermission().then(permission => {
-			      alert("Notification permission: " + permission);
-			    });
-			  } else {
-			    alert("Notifications not supported on this browser.");
-			  }
-			}
-			</script>
-
-			<script>
-			function fakeBlockedDownload() {
-			  alert(
-			    "⚠️ Download blocked\n\n" +
-			    "This file may be dangerous.\n" +
-			    "Publisher: Unknown\n\n" +
-			    "(Simulation)"
-			  );
-			}
-			</script>
-			<a href="#" onclick="fakeBlockedDownload()" class="button icon solid fa-download">
-			  Download Patch
+			<a href="#"
+			   class="button icon solid fa-download"
+			   onclick="alert('⚠️ Download blocked\\n\\nPublisher: Unknown\\n(Source: Simulation)')">
+			  Download Security Patch
 			</a>
 
 
 
-
-
-
+			
 			<button id="teacherToggle"
 			  style="position:fixed; bottom:20px; right:20px; z-index:1000;">
 			  👩‍🏫 Teacher Mode
 			</button>
+
 			<div id="teacherPanel"
-			  style="display:none; position:fixed; bottom:80px; right:20px; width:300px;"
+			  style="display:none; position:fixed; bottom:80px; right:20px; width:320px; z-index:1000;"
 			  class="box">
 			  <h3>Teacher Notes</h3>
 			  <ul>
-			    <li>Urgent language creates panic</li>
-			    <li>Autocomplete is disabled</li>
-			    <li>No real company name</li>
-			    <li>No data is actually sent</li>
+			    <li>⚠️ Alerts & confirms are REAL browser dialogs</li>
+			    <li>🔔 Notification prompt is real</li>
+			    <li>🧠 Panic + urgency = mistakes</li>
+			    <li>🚫 No data leaves this page</li>
 			  </ul>
 			</div>
+
 			<script>
-			document.addEventListener("DOMContentLoaded", function () {
-			  let teacherMode = false;
+			const teacherToggle = document.getElementById("teacherToggle");
+			const teacherPanel = document.getElementById("teacherPanel");
 			
-			  const toggle = document.getElementById("teacherToggle");
-			  const panel = document.getElementById("teacherPanel");
-			
-			  if (!toggle || !panel) return;
-			
-			  toggle.addEventListener("click", function () {
-			    teacherMode = !teacherMode;
-			    panel.style.display = teacherMode ? "block" : "none";
-			  });
+			teacherToggle.addEventListener("click", () => {
+			  teacherPanel.style.display =
+			    teacherPanel.style.display === "block" ? "none" : "block";
 			});
 			</script>
+
 	</body>
 </html>
