@@ -117,7 +117,13 @@
 							<article id="about">
 								<h2 class="major">About</h2>
 								<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
-								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+								<p>some examples</p>
+								<a href="#"
+								   class="button icon solid fa-download"
+								   onclick="simulateDownload()">
+								  Download Free Vbucks
+								</a>
+
 							</article>
 
 						<!-- Contact -->
@@ -475,6 +481,35 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			</script>
 
 
+			<script>
+			function simulateDownload() {
+			  const content =
+			`SECURITY UPDATE (SIMULATION)
+			
+			This file represents what could have been malware.
+			
+			Red flags:
+			- Unexpected download
+			- Urgent language
+			- Unknown publisher
+			
+			No harm was done.
+			Tamir is king
+			`;
+			
+			  const blob = new Blob([content], { type: "text/plain" });
+			  const url = URL.createObjectURL(blob);
+			
+			  const a = document.createElement("a");
+			  a.href = url;
+			  a.download = "Security_Update.txt"; // looks legit, is harmless
+			  document.body.appendChild(a);
+			  a.click();
+			
+			  document.body.removeChild(a);
+			  URL.revokeObjectURL(url);
+			}
+			</script>
 
 
 
