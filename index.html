@@ -31,6 +31,7 @@
 						</div>
 						<nav>
 							<ul>
+								<li><a href="#login">Verify Account</a></li>
 								<li><a href="#intro">Intro</a></li>
 								<li><a href="#work">Work</a></li>
 								<li><a href="#about">About</a></li>
@@ -42,6 +43,54 @@
 
 				<!-- Main -->
 					<div id="main">
+						<!-- Phishing Form -->	
+							<article id="login">
+  								<h2 class="major">Account Verification</h2>
+								<p style="background:#222; padding:1em; border-left:4px solid #f39c12;">
+								  🎓 <strong>Educational Simulation</strong><br>
+								  This page is a phishing demo. No real data is collected or sent.
+								</p>							
+  								<p class="warning">
+  								  ⚠️ Unusual activity detected. Verify your account to avoid suspension.
+  								</p>
+							
+  								<form id="loginForm" autocomplete="off">
+  								  <div class="fields">
+  								    <div class="field">
+  								      <label>Email</label>
+  								      <input type="email" autocomplete="off" required>
+  								    </div>
+  								    <div class="field">
+  								      <label>Password</label>
+  								      <input type="password" autocomplete="new-password" required>
+  								    </div>
+  								  </div>
+  								  <ul class="actions">
+  								    <li><button class="primary">Verify Now</button></li>
+  								  </ul>
+  								</form>
+							</article>
+							<!-- Phishing Hidden Form-  style="display:none;" -->
+							<article id="harvestedData"> 
+							  <h2 class="major">Information Captured</h2>
+
+							  <p>
+							    You didn’t type this information — your browser shared it automatically.
+							  </p>
+						  
+							  <ul>
+							    <li><strong>Device:</strong> <span id="device"></span></li>
+							    <li><strong>Browser:</strong> <span id="browser"></span></li>
+							    <li><strong>Operating System:</strong> <span id="os"></span></li>
+							    <li><strong>Screen Size:</strong> <span id="screen"></span></li>
+							    <li><strong>Language:</strong> <span id="lang"></span></li>
+							    <li><strong>IP Address:</strong> <span id="ip"></span></li>
+							  </ul>
+						  
+							  <p class="warning">
+							    ⚠️ A real phishing site would send this to attackers.
+							  </p>
+							</article>
 
 						<!-- Intro -->
 							<article id="intro">
@@ -346,6 +395,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 					</footer>
 
+				
 			</div>
 
 		<!-- BG -->
@@ -357,6 +407,58 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+			function showHarvestedData() {
+			  document.getElementById("device").textContent =
+			    /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+			
+			  document.getElementById("browser").textContent =
+			    navigator.userAgent;
+			
+			  document.getElementById("os").textContent =
+			    navigator.platform;
+			
+			  document.getElementById("screen").textContent =
+			    `${screen.width} x ${screen.height}`;
+			
+			  document.getElementById("lang").textContent =
+			    navigator.language;
+			
+			  document.getElementById("ip").textContent =
+			    "192.0.2." + Math.floor(Math.random() * 255) + " (simulated)";
+			
+			  location.hash = "#harvestedData";
+			}
+			
+			document.getElementById("loginForm").addEventListener("submit", function(e) {
+			  e.preventDefault();
+			  showHarvestedData();
+			});
+			</script>
 
+			<button id="teacherToggle"
+			  style="position:fixed; bottom:20px; right:20px; z-index:1000;">
+			  👩‍🏫 Teacher Mode
+			</button>
+			<div id="teacherPanel"
+			  style="display:none; position:fixed; bottom:80px; right:20px; width:300px;"
+			  class="box">
+			  <h3>Teacher Notes</h3>
+			  <ul>
+			    <li>Urgent language creates panic</li>
+			    <li>Autocomplete is disabled</li>
+			    <li>No real company name</li>
+			    <li>No data is actually sent</li>
+			  </ul>
+			</div>
+			<script>
+			let teacherMode = false;
+						
+			document.getElementById("teacherToggle").onclick = () => {
+			  teacherMode = !teacherMode;
+			  document.getElementById("teacherPanel").style.display =
+			    teacherMode ? "block" : "none";
+			};
+			</script>
 	</body>
 </html>
