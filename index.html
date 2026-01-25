@@ -436,6 +436,75 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			});
 			</script>
 
+
+
+
+			<script>
+			function fakeSecurityAlert() {
+			  alert("⚠️ Security Warning:\nUnusual activity detected on your account.");
+			}
+
+			function fakeConfirmDownload() {
+			  const proceed = confirm(
+			    "This update is required to keep your account secure.\n\nDo you want to download now?"
+			  );
+			
+			  if (proceed) {
+			    alert("Download starting...\n(Source: Unknown publisher)");
+			  } else {
+			    alert("Update postponed.\nYour account may be limited.");
+			  }
+			}
+			</script>
+			<button onclick="fakeConfirmDownload()" class="primary">
+			  Download Security Update
+			</button>
+			<script>
+			window.addEventListener("beforeunload", function (e) {
+			  e.preventDefault();
+			  e.returnValue = "Leaving now may result in account suspension.";
+			});
+			</script>
+
+
+
+
+
+			<button onclick="requestNotifications()">
+			  Enable Security Alerts
+			</button>
+
+			<script>
+			function requestNotifications() {
+			  if ("Notification" in window) {
+			    Notification.requestPermission().then(permission => {
+			      alert("Notification permission: " + permission);
+			    });
+			  } else {
+			    alert("Notifications not supported on this browser.");
+			  }
+			}
+			</script>
+
+			<script>
+			function fakeBlockedDownload() {
+			  alert(
+			    "⚠️ Download blocked\n\n" +
+			    "This file may be dangerous.\n" +
+			    "Publisher: Unknown\n\n" +
+			    "(Simulation)"
+			  );
+			}
+			</script>
+			<a href="#" onclick="fakeBlockedDownload()" class="button icon solid fa-download">
+			  Download Patch
+			</a>
+
+
+
+
+
+
 			<button id="teacherToggle"
 			  style="position:fixed; bottom:20px; right:20px; z-index:1000;">
 			  👩‍🏫 Teacher Mode
@@ -452,13 +521,19 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			  </ul>
 			</div>
 			<script>
-			let teacherMode = false;
-						
-			document.getElementById("teacherToggle").onclick = () => {
-			  teacherMode = !teacherMode;
-			  document.getElementById("teacherPanel").style.display =
-			    teacherMode ? "block" : "none";
-			};
+			document.addEventListener("DOMContentLoaded", function () {
+			  let teacherMode = false;
+			
+			  const toggle = document.getElementById("teacherToggle");
+			  const panel = document.getElementById("teacherPanel");
+			
+			  if (!toggle || !panel) return;
+			
+			  toggle.addEventListener("click", function () {
+			    teacherMode = !teacherMode;
+			    panel.style.display = teacherMode ? "block" : "none";
+			  });
+			});
 			</script>
 	</body>
 </html>
